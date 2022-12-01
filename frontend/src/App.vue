@@ -1,15 +1,18 @@
 <script lang="ts" setup>
 import NavBar from "./components/Navbar.vue";
 import VersionsList from "./components/VersionsList.vue";
+import Sidebar from "./components/Sidebar.vue";
 </script>
 
 <template>
   <main>
 
     <nav-bar></nav-bar>
-    <versions-list></versions-list>
-    <div></div>
-    <div></div>
+
+    <div class="main-content">
+      <sidebar></sidebar>
+      <versions-list></versions-list>
+    </div>
 
   </main>
 
@@ -25,6 +28,12 @@ main {
   height: 100vh;
   width: 100vw;
   background-color: navy;
+
+}
+
+.main-content {
+  display: flex;
+  height: 100%;
 
 }
 
