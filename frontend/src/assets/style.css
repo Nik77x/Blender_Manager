@@ -12,6 +12,9 @@ body {
     sans-serif;
 }
 
+.db-blue {
+    background-color: blue;
+}
 
 #app {
     height: 100vh;

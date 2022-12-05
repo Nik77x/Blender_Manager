@@ -1,9 +1,9 @@
 <script lang="ts">
 import ListViewBar from "./ListViewBar.vue";
-
+import ListItem from "./ListItem.vue";
 export default {
   name: "VersionsList",
-  components: { ListViewBar },
+  components: { ListItem, ListViewBar },
 };
 </script>
 
@@ -12,42 +12,27 @@ export default {
     <ListViewBar></ListViewBar>
     <div class="list">
       <ul>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
-        <li>yes</li>
+        <li>
+          <ListItem></ListItem>
+        </li>
+        <li>
+          <ListItem></ListItem>
+        </li>
+        <li>
+          <ListItem></ListItem>
+        </li>
+        <li>
+          <ListItem></ListItem>
+        </li>
+        <li>
+          <ListItem></ListItem>
+        </li>
+        <li>
+          <ListItem></ListItem>
+        </li>
+        <li>
+          <ListItem></ListItem>
+        </li>
       </ul>
     </div>
   </div>
@@ -78,7 +63,7 @@ export default {
   width: 100%;
   height: 100%;
 
-  overflow-y: auto;
+
 }
 
 .option {
@@ -99,6 +84,32 @@ export default {
     align-self: center;
     width: 100%;
     margin: 0;
+  }
+}
+
+ul {
+
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+li {
+  width: 90%;
+  height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  div {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

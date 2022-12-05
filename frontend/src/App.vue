@@ -26,7 +26,11 @@ import ListView from "./components/ListView/ListView.vue";
 * {
   overflow-y: hidden;
   overflow-x: hidden;
+  user-select: none;
 }
+</style>
+
+<style scoped>
 
 main {
   display: flex;
