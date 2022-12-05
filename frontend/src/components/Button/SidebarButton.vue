@@ -1,59 +1,75 @@
 <template>
-  <button class="main">
-    <div class="flex">
+  <button @click="buttonClick" class="main-button">
+    <span class="content">
+      {{ content }}
 
-      <img src="src/assets/images/logo-universal.png" alt="">
-      <h1 class="content">{{content}}</h1>
-
-
-    </div>
-
+      <img src="../../assets/images/logo-universal.png" alt="" />
+    </span>
   </button>
 </template>
 
-<script>
+<script setup>
+const emit = defineEmits(["clicked"]);
+const props = defineProps({
+  content: { type: String, required: true },
+});
 
-export default {
-
-  name: "SidebarButton",
-
-  setup() {
-
-  },
-
-  props: {
-
-    content: String
-
-  }
+function buttonClick() {
+  emit("clicked");
 }
 </script>
 
 <style lang="scss" scoped>
+@import "src/assets/variables.scss";
 
 img {
   max-width: 50px;
-  padding-left: 5px;
+  padding-left: 10px;
+  padding-right: 0;
   align-self: center;
 }
 
-.flex {
-  display: flex;
-  align-content: center;
-}
-
-.main {
+.main-button {
   height: 50px;
-  width: 100%;
-  background-color: black;
+  width: 90%;
+  background-color: $BG-button;
+  display: flex;
+  color: $text-color;
+  border-width: 0;
+  margin: 10px auto;
+  border-radius: 5px;
 
+  img {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+
+  span {
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: $action-color;
+  }
+
+  &:checked {
+    background-color: $action-color;
+  }
 }
-.content {
-  padding: 0;
-  margin: 0 auto 0 20px;
-  align-self: center;
 
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
+  padding-left: 10px;
   color: white;
+
+  font-size: 25px;
 
   max-font-size: 25px;
 }

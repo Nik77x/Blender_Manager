@@ -1,32 +1,27 @@
 <script lang="ts">
 export default {
-  name: "Navbar"
-}
+  name: "Navbar",
+};
 </script>
 
-
 <template>
-
   <div class="main">
-      <h1>navbar</h1>
-
+    <h1>navbar</h1>
   </div>
-
 </template>
 
-
-
 <style lang="scss" scoped>
+@import "src/assets/variables.scss";
 
-div {
-
-  height: 70px;
+.main {
+  display: flex;
+  flex-grow: 1;
   width: 100%;
+  height: 100%;
+  background-color: $background-color-darker;
 
-
-
-  background-color: black;
-
+  h1 {
+    margin-left: 10px;
+  }
 }
-
 </style>

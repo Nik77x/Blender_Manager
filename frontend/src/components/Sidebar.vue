@@ -1,37 +1,63 @@
 <template>
-  <div class="main">
-      <SidebarButton content="Downloads"></SidebarButton>
-      <SidebarButton content="Library"></SidebarButton>
-      <SidebarButton class="bottom" content="Settings"></SidebarButton>
-  </div>
+  <div class="sidebar">
+    <SidebarButton
+      content="Downloads"
+      @clicked="changeCategory(Category.Downloads)"
+    ></SidebarButton>
 
+    <SidebarButton
+      content="Library"
+      @clicked="changeCategory(Category.Library)"
+    ></SidebarButton>
+
+    <SidebarButton
+      class="bottom"
+      content="Settings"
+      @clicked="changeCategory(Category.Settings)"
+    ></SidebarButton>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 import SidebarButton from "./Button/SidebarButton.vue";
+import Category from "../helpers/Category.js";
+import { useCurrentCategory } from "../stores/stores";
 
 export default {
   name: "Sidebar",
-  components: {SidebarButton}
-}
+  computed: {
+    Category() {
+      return Category;
+    },
+  },
+  components: { SidebarButton },
+
+  setup() {
+    let currentCategory = useCurrentCategory();
+
+    let changeCategory = (category: Category) => {
+      currentCategory.category = category;
+    };
+
+    return { changeCategory };
+  },
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "../../src/assets/variables.scss";
 
-.main {
-  width: 400px;
-  height: 100%;
-  background-color: #343434;
-  margin: 0;
+.sidebar {
   display: flex;
   flex-flow: column;
+  width: 400px;
 
+  background-color: $background-color;
+  margin: 0;
 }
 
 .bottom {
   margin-top: auto;
-  align-self: end;
+  margin-right: auto;
 }
-
-
 </style>

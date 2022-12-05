@@ -1,42 +1,56 @@
-<script lang="ts" setup>
-import NavBar from "./components/Navbar.vue";
-import VersionsList from "./components/VersionsList.vue";
-import Sidebar from "./components/Sidebar.vue";
-</script>
-
 <template>
   <main>
-
-    <nav-bar></nav-bar>
-
-    <div class="main-content">
-      <sidebar></sidebar>
-      <versions-list></versions-list>
+    <div class="nav-bar-div">
+      <Nav-bar></Nav-bar>
     </div>
 
+    <div class="main-content-div">
+      <sidebar></sidebar>
+      <ListView></ListView>
+    </div>
+
+    <div class="status-bar-div">
+      <statusbar></statusbar>
+    </div>
   </main>
-
-
 </template>
 
-<style lang="scss">
+<script lang="ts" setup>
+import NavBar from "./components/Navbar.vue";
+import Sidebar from "./components/Sidebar.vue";
+import Statusbar from "./components/Statusbar.vue";
+import ListView from "./components/ListView/ListView.vue";
+</script>
+
+<style>
+* {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
 
 main {
-
   display: flex;
   flex-flow: column;
   height: 100vh;
   width: 100vw;
   background-color: navy;
-
 }
 
-.main-content {
+.nav-bar-div {
+  max-height: 90px;
+  height: 150px;
+  width: 100%;
+}
+
+.main-content-div {
   display: flex;
-  height: 100%;
-
+  flex-flow: row;
+  flex-grow: 1;
+  width: 100%;
 }
 
-
-
+.status-bar-div {
+  max-height: 25px;
+  min-height: 20px;
+}
 </style>
