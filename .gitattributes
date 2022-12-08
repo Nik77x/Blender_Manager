@@ -2,3 +2,4 @@ frontend/src/** linguist-detectable
 frontend/wailsjs/** linguist-generated
 build/** linguist-generated
 go.sum -linguist-generated
+*.svg -linguist-vendor
