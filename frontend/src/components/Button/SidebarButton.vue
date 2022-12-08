@@ -3,16 +3,17 @@
     <span class="content">
       {{ content }}
 
-      <img src="../../assets/images/logo-universal.png" alt="" />
+      <img v-bind:src="props.icon" alt="" />
     </span>
   </button>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 const emit = defineEmits(["clicked"]);
-const props = defineProps({
-  content: { type: String, required: true },
-});
+const props = defineProps<{
+  content: string;
+  icon: string;
+}>();
 
 function buttonClick() {
   emit("clicked");

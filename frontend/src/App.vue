@@ -31,7 +31,6 @@ import ListView from "./components/ListView/ListView.vue";
 </style>
 
 <style scoped>
-
 main {
   display: flex;
   flex-flow: column;

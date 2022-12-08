@@ -5,3 +5,44 @@
     src: local(""),
     url("src/assets/fonts/nunito-v16-latin-regular.woff2") format("woff2");
 }
+
+@font-face {
+    font-family: "Quicksand";
+    font-style: normal;
+    font-weight: 400;
+    src: local(""),
+    url("src/assets/fonts/Quicksand-Regular.ttf") format("Truetype");
+}
+
+@font-face {
+    font-family: "Quicksand";
+    font-style: normal;
+    font-weight: 300;
+    src: local(""),
+    url("src/assets/fonts/Quicksand-Light.ttf") format("Truetype");
+}
+
+@font-face {
+    font-family: "Monsterrat Light";
+    font-style: normal;
+    font-weight: 200;
+    src: local(""),
+    url("src/assets/fonts/Montserrat-Light.ttf") format("Truetype");
+}
+
+@font-face {
+    font-family: "Monsterrat";
+    font-style: normal;
+    font-weight: 400;
+    src: local(""),
+    url("src/assets/fonts/Montserrat-Regular.ttf") format("Truetype");
+}
+
+@font-face {
+    font-family: "Monsterrat Thin";
+    font-style: normal;
+    font-weight: 100;
+    src: local(""),
+    url("src/assets/fonts/Montserrat-Thin.ttf") format("Truetype");
+}
+

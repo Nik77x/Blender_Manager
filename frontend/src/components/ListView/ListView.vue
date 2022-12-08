@@ -1,6 +1,7 @@
 <script lang="ts">
 import ListViewBar from "./ListViewBar.vue";
 import ListItem from "./ListItem.vue";
+
 export default {
   name: "VersionsList",
   components: { ListItem, ListViewBar },
@@ -13,25 +14,14 @@ export default {
     <div class="list">
       <ul>
         <li>
-          <ListItem></ListItem>
-        </li>
-        <li>
-          <ListItem></ListItem>
-        </li>
-        <li>
-          <ListItem></ListItem>
-        </li>
-        <li>
-          <ListItem></ListItem>
-        </li>
-        <li>
-          <ListItem></ListItem>
-        </li>
-        <li>
-          <ListItem></ListItem>
-        </li>
-        <li>
-          <ListItem></ListItem>
+          <ListItem
+            title="Blender 5.0 - Stable"
+            commit-link=""
+            commit-hash="dasd541"
+            build-date="4sda"
+            build-branch="simulation-nodes"
+            download-link=""
+          ></ListItem>
         </li>
       </ul>
     </div>
@@ -62,8 +52,6 @@ export default {
   background-color: $background-color-lighter;
   width: 100%;
   height: 100%;
-
-
 }
 
 .option {
@@ -88,7 +76,6 @@ export default {
 }
 
 ul {
-
   flex-grow: 1;
   width: 100%;
   height: 100%;
