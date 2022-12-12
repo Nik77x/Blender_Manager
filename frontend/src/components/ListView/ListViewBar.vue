@@ -18,6 +18,8 @@ export default {
 };
 </script>
 
+<script lang="ts" setup></script>
+
 <style lang="scss" scoped>
 .options-bar {
   background-color: #373737;

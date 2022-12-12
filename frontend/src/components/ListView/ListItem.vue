@@ -1,17 +1,20 @@
 <template>
   <div class="main">
     <div class="content">
-      <h1 class="title">{{ props.title }}</h1>
-      <hr class="vertical-separator"/>
+      <h1 class="title">{{ props.blendInfo.version_title }}</h1>
+
+      <hr class="vertical-separator" />
       <div class="sub-info">
-        <p class="build-branch">{{ props.buildBranch }}</p>
-        <hr class="horizontal-separator"/>
-        <p class="build-date">{{ props.buildDate }}</p>
-        <hr class="horizontal-separator"/>
-        <p class="build-commit">{{ props.commitHash }}</p>
+        <p class="build-branch">{{ props.blendInfo.build_type }}</p>
+        <hr class="horizontal-separator" />
+        <p class="build-date">{{ props.blendInfo.upload_date }}</p>
+        <hr class="horizontal-separator" />
+        <p class="build-commit">{{ props.blendInfo.commit_hash }}</p>
+        <hr class="horizontal-separator" />
+        <p>dbg: {{ progress }}</p>
       </div>
     </div>
-    <button>Download</button>
+    <button @click="download">Download</button>
   </div>
 </template>
 
@@ -22,17 +25,23 @@ export default {
 </script>
 
 <script lang="ts" setup>
+import { Data } from "../../../wailsjs/go/models";
+import { DownloadBlender } from "../../../wailsjs/go/backend/App";
+import { ref } from "vue";
+import { EventsOn } from "../../../wailsjs/runtime";
+
 const props = defineProps<{
-  title: String;
-  buildBranch: String;
-  buildDate: String;
-  commitHash: String;
-  commitLink: String;
-  downloadLink: String;
+  blendInfo: Data.BlendInfo;
 }>();
 
+let progress = ref(props.blendInfo.download_progress);
+
+EventsOn(props.blendInfo.commit_hash + "_dl-progress", (prog) => {
+  progress.value = prog * 100;
+});
+
 function download() {
-  // TODO: Download blender, unpack, store, link, run, ??, profit
+  DownloadBlender(props.blendInfo);
 }
 </script>
 

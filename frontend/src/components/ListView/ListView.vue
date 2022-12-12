@@ -13,20 +13,39 @@ export default {
     <ListViewBar></ListViewBar>
     <div class="list">
       <ul>
-        <li>
-          <ListItem
-            title="Blender 5.0 - Stable"
-            commit-link=""
-            commit-hash="dasd541"
-            build-date="4sda"
-            build-branch="simulation-nodes"
-            download-link=""
-          ></ListItem>
+        <li v-for="info in blendInfos" :key="info.commit_hash">
+          <ListItem :blend-info="info"></ListItem>
         </li>
       </ul>
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { GetBlendInfos } from "../../../wailsjs/go/backend/App";
+import { LogFatal } from "../../../wailsjs/runtime";
+import { onMounted, ref } from "vue";
+import { Data } from "../../../wailsjs/go/models";
+
+let blendInfos = ref<Data.BlendInfo[]>();
+
+//
+// let tmpBi = new Data.BlendInfo();
+// tmpBi.commit_hash = "dakoskdoas";
+// tmpBi.version_title = "whatever";
+//
+// blendInfos.push(tmpBi);
+
+onMounted(() => {
+  GetBlendInfos()
+    .then((val) => {
+      blendInfos.value = val;
+    })
+    .catch(() => {
+      LogFatal("Cant get blendInfos");
+    });
+});
+</script>
 
 <style lang="scss" scoped>
 @import "src/assets/variables.scss";
