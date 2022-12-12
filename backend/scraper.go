@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/Nik77x/Blender_Manager/backend/Data"
 	"github.com/gocolly/colly/v2"
-	"log"
 	"runtime"
 	"strings"
 )
@@ -19,11 +18,10 @@ func ScrapeVersions() []Data.BlendInfo {
 
 	c.OnRequest(func(request *colly.Request) {
 		request.Headers.Set("Accept-Language", "en-US;q=0.9")
-		request.Headers.Set("User-Agent", "Mozilla/5.0 (compatible; MSIE 6.0; Windows NT 10.0; Trident/3.0)")
-
 	})
 
 	c.OnError(func(response *colly.Response, err error) {
+		// TODO: Display error boxes don't just print to console
 		println("Scraping failed with error:")
 		println(err)
 		return
@@ -34,14 +32,10 @@ func ScrapeVersions() []Data.BlendInfo {
 	c.OnHTML(selector, func(element *colly.HTMLElement) {
 
 		sel := element.DOM
-		//sel = sel.Not(":hidden")
-		//println(len(sel.Children().Not("li:hidden")))
 
 		// Filter versions
 		sel = sel.Children()
-		log.Println(len(sel.Nodes))
 		sel = sel.Not("[style=display\\:none\\;]")
-		log.Println(len(sel.Nodes))
 
 		for i := range sel.Nodes {
 
@@ -72,13 +66,13 @@ func ScrapeVersions() []Data.BlendInfo {
 	})
 
 	err := c.Visit("https://builder.blender.org/download/experimental/")
+	// TODO: Handle them errors!
+	c.Visit("https://builder.blender.org/download/daily/")
+	c.Visit("https://builder.blender.org/download/patch/")
+
 	if err != nil {
 		println("cant visit URL")
 		panic(err)
-	}
-
-	for _, info := range blendInfos {
-		info.Print()
 	}
 
 	return blendInfos
