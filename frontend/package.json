@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "epic-spinners": "^2.0.0",
     "pinia": "^2.0.27",
     "prettier": "^2.8.0",
     "sass": "^1.56.1",

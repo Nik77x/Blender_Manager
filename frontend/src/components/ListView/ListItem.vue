@@ -4,15 +4,27 @@
       <h1 class="title">{{ props.blendInfo.version_title }}</h1>
 
       <hr class="vertical-separator" />
-      <div class="sub-info">
-        <p class="build-branch">{{ props.blendInfo.build_type }}</p>
-        <hr class="horizontal-separator" />
-        <p class="build-date">{{ props.blendInfo.upload_date }}</p>
-        <hr class="horizontal-separator" />
-        <p class="build-commit">{{ props.blendInfo.commit_hash }}</p>
-        <hr class="horizontal-separator" />
-        <p>dbg: {{ progress }}</p>
-      </div>
+      <transition name="slide" mode="out-in">
+        <div class="sub-info" v-if="!isDownloading">
+          <p class="build-branch">{{ props.blendInfo.build_type }}</p>
+          <hr class="horizontal-separator" />
+          <p class="build-date">{{ props.blendInfo.upload_date }}</p>
+          <hr class="horizontal-separator" />
+          <p class="build-commit">{{ props.blendInfo.commit_hash }}</p>
+          <hr class="horizontal-separator" />
+        </div>
+        <progressbar
+          class="progress-bar"
+          :value="progress === undefined ? 0 : progress"
+          :max="100"
+          v-else
+        ></progressbar>
+      </transition>
+      <!--      <semipolar-spinner-->
+      <!--          :animation-duration="2000"-->
+      <!--          :size="65"-->
+      <!--          color="#ff1d5e"-->
+      <!--      />-->
     </div>
     <button @click="download">Download</button>
   </div>
@@ -29,18 +41,22 @@ import { Data } from "../../../wailsjs/go/models";
 import { DownloadBlender } from "../../../wailsjs/go/backend/App";
 import { ref } from "vue";
 import { EventsOn } from "../../../wailsjs/runtime";
+import Progressbar from "../Progressbar.vue";
 
 const props = defineProps<{
   blendInfo: Data.BlendInfo;
 }>();
 
-let progress = ref(props.blendInfo.download_progress);
+const progress = ref<number>();
 
-EventsOn(props.blendInfo.commit_hash + "_dl-progress", (prog) => {
-  progress.value = prog * 100;
+const isDownloading = ref(false);
+
+EventsOn(props.blendInfo.commit_hash + "_dl-progress", (progress_val) => {
+  progress.value = progress_val * 100;
 });
 
 function download() {
+  isDownloading.value = true;
   DownloadBlender(props.blendInfo);
 }
 </script>
@@ -48,6 +64,18 @@ function download() {
 <style lang="scss" scoped>
 @import "src/assets/variables.scss";
 
+// Transition things //
+.slide-leave-active,
+.slide-enter-active {
+  transition: all 0.5s ease;
+}
+
+.slide-leave-to,
+.slide-enter-from {
+  transform: translateX(-500px);
+}
+
+// Main style //
 .main {
   background-color: $background-color;
   border-radius: 20px;
@@ -68,7 +96,7 @@ function download() {
     border-radius: 10px;
     border-width: 0;
     color: $text-color;
-    text-align: start;
+    text-align: center;
     font-size: 1.2rem;
     font-family: "Nunito", serif;
 
@@ -76,6 +104,10 @@ function download() {
       filter: brightness(150%);
     }
   }
+}
+
+.progress-bar {
+  width: 80%;
 }
 
 .content {
