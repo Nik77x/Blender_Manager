@@ -1,6 +1,6 @@
 # [COOL ICON HERE]
 
-# [FLASHY BANNER]
+## it's not done yet! wait for 0.1.0
 
 # Blender Version Manager
 
