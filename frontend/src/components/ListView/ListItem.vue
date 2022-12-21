@@ -3,21 +3,21 @@
     <div class="content">
       <h1 class="title">{{ props.blendInfo.version_title }}</h1>
 
-      <hr class="vertical-separator" />
+      <hr class="vertical-separator"/>
       <transition name="slide" mode="out-in">
         <div class="sub-info" v-if="!isDownloading">
           <p class="build-branch">{{ props.blendInfo.build_type }}</p>
-          <hr class="horizontal-separator" />
+          <hr class="horizontal-separator"/>
           <p class="build-date">{{ props.blendInfo.upload_date }}</p>
-          <hr class="horizontal-separator" />
+          <hr class="horizontal-separator"/>
           <p class="build-commit">{{ props.blendInfo.commit_hash }}</p>
-          <hr class="horizontal-separator" />
+          <hr class="horizontal-separator"/>
         </div>
         <progressbar
-          class="progress-bar"
-          :value="progress === undefined ? 0 : progress"
-          :max="100"
-          v-else
+            class="progress-bar"
+            :value="progress === undefined ? 0 : progress"
+            :max="100"
+            v-else
         ></progressbar>
       </transition>
       <!--      <semipolar-spinner-->
@@ -37,10 +37,10 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { Data } from "../../../wailsjs/go/models";
-import { DownloadBlender } from "../../../wailsjs/go/backend/App";
-import { ref } from "vue";
-import { EventsOn } from "../../../wailsjs/runtime";
+import {Data} from "../../../wailsjs/go/models";
+import {DownloadBlender} from "../../../wailsjs/go/backend/App";
+import {ref} from "vue";
+import {EventsEmit, EventsOn} from "../../../wailsjs/runtime";
 import Progressbar from "../Progressbar.vue";
 
 const props = defineProps<{
@@ -53,11 +53,22 @@ const isDownloading = ref(false);
 
 EventsOn(props.blendInfo.commit_hash + "_dl-progress", (progress_val) => {
   progress.value = progress_val * 100;
+  if (progress_val === 1) {
+    isDownloading.value = false;
+  }
 });
 
 function download() {
-  isDownloading.value = true;
+
   DownloadBlender(props.blendInfo);
+  isDownloading.value = true;
+}
+
+function cancelDownload() {
+
+  EventsEmit(props.blendInfo.commit_hash + "-cancel");
+  isDownloading.value = false;
+
 }
 </script>
 
@@ -72,7 +83,7 @@ function download() {
 
 .slide-leave-to,
 .slide-enter-from {
-  transform: translateX(-500px);
+  transform: translateY(200px);
 }
 
 // Main style //

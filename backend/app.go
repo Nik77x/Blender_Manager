@@ -67,7 +67,15 @@ func (a *App) DownloadBlender(bi Data.BlendInfo) {
 
 func updateProgress(info *Data.BlendInfo, res *grab.Response, ctx *context.Context) {
 
-	ticker := time.NewTicker(1 * time.Second)
+	// TODO: make the progress update rate a setting
+	ticker := time.NewTicker(200 * time.Millisecond)
+
+	runtime.EventsOn(*ctx, fmt.Sprintf("%v-cancel", info.CommitHash), func(optionalData ...interface{}) {
+		err := res.Cancel()
+		if err != nil {
+			log.Println(err)
+		}
+	})
 
 	go func() {
 
@@ -76,13 +84,19 @@ func updateProgress(info *Data.BlendInfo, res *grab.Response, ctx *context.Conte
 
 			case <-ticker.C:
 				{
+					// send progress event
+					runtime.EventsEmit(*ctx, fmt.Sprintf("%v_dl-progress", info.CommitHash),
+						res.Progress())
+					// TODO: pass ETA res.ETA().Format(time.)
 
-					runtime.EventsEmit(*ctx, fmt.Sprintf("%v_dl-progress", info.CommitHash), res.Progress())
 					log.Printf("Progress = %v", res.Progress()*100)
 
 				}
 			case <-res.Done:
 				{
+					// send done event
+					runtime.EventsEmit(*ctx, fmt.Sprintf("%v_dl-progress", info.CommitHash), 1)
+
 					ticker.Stop()
 					return
 				}

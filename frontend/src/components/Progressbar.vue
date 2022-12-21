@@ -7,7 +7,7 @@
         :size="15"
         color="#fff"
       />
-      <h1>{{ progress_percent }}%</h1>
+      <h1>{{ progress_percent }}% {{ message }}</h1>
     </div>
   </div>
 </template>
@@ -27,6 +27,7 @@ import { computed } from "vue";
 const props = defineProps<{
   max: number;
   value: number;
+  message?: string;
 }>();
 
 const progress_percent = computed(() => {
