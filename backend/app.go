@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/Nik77x/Blender_Manager/backend/Data"
+	"github.com/Nik77x/Blender_Manager/backend/Data/Config"
 	"github.com/cavaliergopher/grab/v3"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"log"
@@ -14,7 +15,7 @@ import (
 type App struct {
 	ctx        context.Context
 	BlendInfos []Data.BlendInfo
-	settings   Data.Settings
+	config     Config.CfgManager
 }
 
 // NewApp creates a new App application struct
@@ -27,11 +28,11 @@ func NewApp() *App {
 func (a *App) Startup(ctx context.Context) {
 	a.ctx = ctx
 
-	a.settings.LibraryPath = "H:\\AllTheStuff\\Projects\\Programming\\Go\\dl_Test"
+	cfgManager := Config.NewManager()
+
+	log.Printf(cfgManager.GetConfig().LibraryPath)
 
 	a.UpdateVersions()
-
-	// TODO save and load settings + UI to change them
 
 }
 
@@ -53,7 +54,7 @@ func (a *App) DownloadBlender(bi Data.BlendInfo) {
 
 	dlClient := grab.NewClient()
 
-	req, e := grab.NewRequest(a.settings.LibraryPath, bi.DownloadLink)
+	req, e := grab.NewRequest(a.config.GetConfig().LibraryPath, bi.DownloadLink)
 
 	if e != nil {
 		log.Fatalf("Failed to download blender %v", e)
